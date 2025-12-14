@@ -1,0 +1,100 @@
+/* ===== VARIABLES.CSS - Variables CSS Globales ===== */
+
+:root {
+    /* Colores principales */
+    --color-primary: #ffd700;
+    --color-primary-light: #ffed4e;
+    --color-primary-dark: #e6c200;
+    
+    /* Colores de texto */
+    --color-text-primary: #ffffff;
+    --color-text-secondary: #e0e0e0;
+    --color-text-muted: #c0c0c0;
+    --color-text-accent: #ffd700;
+    
+    /* Colores de fondo */
+    --bg-primary: linear-gradient(135deg, #1e1e1e 0%, #2d2d2d 100%);
+    --bg-secondary: rgba(255, 255, 255, 0.05);
+    --bg-glass: rgba(255, 255, 255, 0.1);
+    --bg-modal: rgba(0, 0, 0, 0.9);
+    
+    /* Bordes */
+    --border-glass: 1px solid rgba(255, 255, 255, 0.1);
+    --border-primary: 2px solid var(--color-primary);
+    --border-radius-sm: 10px;
+    --border-radius-md: 15px;
+    --border-radius-lg: 20px;
+    --border-radius-xl: 25px;
+    
+    /* Espaciado */
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 1.5rem;
+    --spacing-lg: 2rem;
+    --spacing-xl: 3rem;
+    
+    /* Tipografía */
+    --font-family-primary: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    --font-size-xs: 0.8rem;
+    --font-size-sm: 0.9rem;
+    --font-size-base: 1rem;
+    --font-size-lg: 1.2rem;
+    --font-size-xl: 1.5rem;
+    --font-size-2xl: 2rem;
+    --font-size-3xl: 3rem;
+    
+    /* Sombras */
+    --shadow-sm: 0 4px 8px rgba(0, 0, 0, 0.2);
+    --shadow-md: 0 8px 25px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.5);
+    --shadow-glow: 0 0 30px rgba(255, 215, 0, 0.2);
+    
+    /* Transiciones */
+    --transition-fast: 0.2s ease;
+    --transition-normal: 0.3s ease;
+    --transition-slow: 0.5s ease;
+    
+    /* Z-index */
+    --z-modal: 10000;
+    --z-overlay: 9999;
+    --z-dropdown: 1000;
+    --z-header: 100;
+    
+    /* Breakpoints (para uso en JavaScript) */
+    --breakpoint-mobile: 480px;
+    --breakpoint-tablet: 768px;
+    --breakpoint-desktop: 1024px;
+    --breakpoint-large: 1200px;
+    --breakpoint-xl: 1400px;
+}
+
+/* Variables para modo oscuro */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-primary: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+        --color-text-primary: #ffffff;
+        --color-text-secondary: #e0e0e0;
+        --color-text-muted: #c0c0c0;
+    }
+}
+
+/* Variables para alto contraste */
+@media (prefers-contrast: high) {
+    :root {
+        --color-primary: #ffff00;
+        --color-text-primary: #ffffff;
+        --color-text-secondary: #ffffff;
+        --border-glass: 2px solid #ffffff;
+        --border-primary: 2px solid #ffff00;
+    }
+}
+
+/* Variables para conexiones lentas */
+@media (prefers-reduced-data: reduce) {
+    :root {
+        --shadow-glow: none;
+        --transition-fast: 0.1s ease;
+        --transition-normal: 0.1s ease;
+        --transition-slow: 0.2s ease;
+    }
+}

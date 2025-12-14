@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="theme-color" content="#ffd700">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="A&A Perfumería">
+    <title>A&A Perfumería - Móvil Ultra</title>
+    
+    <style>
+        /* CSS Crítico Optimizado */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --primary: #ffd700;
+            --primary-light: #ffed4e;
+            --secondary: #1e1e1e;
+            --secondary-light: #2d2d2d;
+            --text-primary: #ffffff;
+            --text-secondary: #cccccc;
+            --bg-glass: rgba(255,255,255,0.05);
+            --border-glass: 1px solid rgba(255,255,255,0.1);
+            --border-primary: 1px solid rgba(255,215,0,0.3);
+            --radius-sm: 15px;
+            --radius-md: 20px;
+            --spacing-sm: 1rem;
+            --transition: 0.3s ease;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-light) 100%);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        /* Header */
+        .header {
+            position: sticky;
+            top: 0;
+            background: rgba(30, 30, 30, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: var(--border-primary);
+            padding: var(--spacing-sm);
+            text-align: center;
+            z-index: 100;
+        }
+        
+        .header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 0.3rem;
+            background: linear-gradient(45deg, var(--primary), var(--primary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            margin-top: 0.5rem;
+        }
+        
+        .nav-back {
+            background: var(--bg-glass);
+            border: var(--border-glass);
+            padding: 8px 16px;
+            border-radius: 20px;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+        
+        .nav-back:hover {
+            background: rgba(255,255,255,0.1);
+        }
+        
+        .cart-button {
+            position: relative;
+            background: var(--bg-glass);
+            border: var(--border-primary);
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .cart-icon {
+            width: 24px;
+            height: 24px;
+            filter: brightness(0) invert(1);
+        }
+        
+        /* Container */
+        .container {
+            padding: 0 var(--spacing-sm);
+            max-width: 100%;
+        }
+        
+        /* Filtros */
+        .filters {
+            padding: var(--spacing-sm) 0;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .filters-scroll {
+            display: flex;
+            gap: 0.5rem;
+            padding: 0 var(--spacing-sm);
+            min-width: max-content;
+        }
+        
+        .filter-btn {
+            background: var(--bg-glass);
+            border: var(--border-glass);
+            color: var(--text-secondary);
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+            white-space: nowrap;
+            min-height: 44px;
+        }
+        
+        .filter-btn.active {
+            background: linear-gradient(45deg, var(--primary), var(--primary-light));
+            color: var(--secondary);
+            border-color: var(--primary);
+        }
+        
+        .filter-btn:active {
+            transform: scale(0.95);
+        }
+        
+        /* Productos */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            padding: 1rem 0;
+        }
+        
+        .product-card {
+            background: var(--bg-glass);
+            border: var(--border-glass);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-sm);
+            transition: all var(--transition);
+            cursor: pointer;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+        
+        .product-image {
+            width: 100%;
+            height: 200px;
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            margin-bottom: var(--spacing-sm);
+            position: relative;
+            background: var(--bg-glass);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+        
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .product-info {
+            text-align: left;
+        }
+        
+        .product-name {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+        
+        .product-description {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+        
+        .product-price {
+            font-size: 1rem;
+            font-weight: bold;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+        
+        .btn-product-action {
+            background: linear-gradient(45deg, var(--primary), var(--primary-light));
+            color: var(--secondary);
+            border: none;
+            padding: 12px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            transition: all var(--transition);
+        }
+        
+        .btn-product-action:active {
+            transform: scale(0.95);
+        }
+        
+        /* Loading y Estados */
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: var(--primary);
+        }
+        
+        .d-none {
+            display: none !important;
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .products-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 1.5rem;
+            }
+        }
+        
+        /* Safe Area para iPhone X+ */
+        @supports (padding: max(0px)) {
+            .header {
+                padding-left: max(var(--spacing-sm), env(safe-area-inset-left));
+                padding-right: max(var(--spacing-sm), env(safe-area-inset-right));
+                padding-top: max(var(--spacing-sm), env(safe-area-inset-top));
+            }
+        }
+        
+        /* Indicador de estado - Verde = funcionando */
+        body {
+            border: 3px solid lime;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <h1>A&A Perfumería</h1>
+        <p>Fragancias inspiradas, creadas con amor</p>
+        
+        <nav class="nav-container">
+            <a href="index.html" class="nav-back">← Inicio</a>
+            <button class="cart-button" onclick="MobileApp.openCart()">
+                <img class="cart-icon" src="recursos/A&A/Material Grafico/Carrito_de_compras_Vacio.png" alt="Carrito">
+            </button>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Filtros -->
+        <section class="filters">
+            <div class="filters-scroll" id="filtersContainer">
+                <!-- Los filtros se cargarán aquí -->
+            </div>
+        </section>
+
+        <!-- Loading -->
+        <div id="loading" class="loading d-none">
+            Cargando productos...
+        </div>
+
+        <!-- Grid de Productos -->
+        <section id="productsGrid" class="products-grid">
+            <!-- Los productos se cargarán aquí -->
+        </section>
+
+        <!-- Mensaje de No Productos -->
+        <div id="noProductsMessage" class="d-none text-center">
+            <p style="opacity: 0.7;">No se encontraron productos en esta categoría.</p>
+        </div>
+    </main>
+
+    <script>
+        console.log('🚀 Iniciando A&A Mobile Ultra Fixed...');
+        
+        // Configuración
+        const CONFIG = {
+            whatsapp: '2721224946',
+            precios: {
+                tamaños: {
+                    '10ml': 90,   // Ya incluye feromonas y doble fijador
+                    '30ml': 160,
+                    '60ml': 220,
+                    '100ml': 285
+                },
+                extras: {
+                    'feromonas': {
+                        nombre: 'Feromonas',
+                        descripcion: 'Atracción y magnetismo personal',
+                        precios: {
+                            '10ml': 0,    // Ya incluido
+                            '30ml': 35,
+                            '60ml': 45,
+                            '100ml': 50
+                        }
+                    },
+                    'doble_fijador': {
+                        nombre: 'Doble Fijador',
+                        descripcion: 'Mayor duración y proyección',
+                        precios: {
+                            '10ml': 0,    // Ya incluido
+                            '30ml': 45,
+                            '60ml': 60,
+                            '100ml': 70
+                        }
+                    }
+                },
+                notas: {
+                    '10ml': 'Ya incluye feromonas y doble fijador',
+                    '30ml': 'Extras opcionales disponibles',
+                    '60ml': 'Extras opcionales disponibles', 
+                    '100ml': 'Extras opcionales disponibles'
+                }
+            }
+        };
+        
+        // Datos de productos reales de A&A
+        const PRODUCTOS = [
+            // CABALLEROS
+            {
+                id: 1, nombre: "Alam", inspirado: "Fragancia masculina exclusiva",
+                descripcion: "Una fragancia sofisticada y elegante, perfecta para el caballero moderno.",
+                precio: "Desde $90", categoria: "caballero", imagen: "recursos/A&A/caballeros_A&A/Alam.jpg"
+            },
+            {
+                id: 2, nombre: "Anuar", inspirado: "Fragancia masculina intensa",
+                descripcion: "Intenso y carismático, ideal para ocasiones especiales.",
+                precio: "Desde $90", categoria: "caballero", imagen: "recursos/A&A/caballeros_A&A/Anuar.jpg"
+            },
+            {
+                id: 3, nombre: "Cristian", inspirado: "Fragancia masculina fresca",
+                descripcion: "Fresco y dinámico, perfecto para el día a día.",
+                precio: "Desde $90", categoria: "caballero", imagen: "recursos/A&A/caballeros_A&A/Cristian.jpg"
+            },
+            {
+                id: 4, nombre: "Cucho", inspirado: "Fragancia masculina audaz",
+                descripcion: "Audaz y distintivo, para hombres que marcan la diferencia.",
+                precio: "Desde $90", categoria: "caballero", imagen: "recursos/A&A/caballeros_A&A/Cucho.jpg"
+            },
+            {
+                id: 5, nombre: "Eduardo", inspirado: "Fragancia masculina clásica",
+                descripcion: "Clásico y refinado, una fragancia atemporal.",
+                precio: "Desde $90", categoria: "caballero", imagen: "recursos/A&A/caballeros_A&A/Eduardo.jpg"
+            },
+            {
+                id: 6, nombre: "Ismael", inspirado: "Fragancia masculina seductora",
+                descripcion: "Seductor y magnético, conquista desde el primer momento.",
+                precio: "Desde $90", categoria: "caballero", imagen: "recursos/A&A/caballeros_A&A/Ismael.jpg"
+            },
+            {
+                id: 7, nombre: "Israel", inspirado: "Fragancia masculina poderosa",
+                descripcion: "Poderoso y enérgico, para hombres seguros de sí mismos.",
+                precio: "Desde $90", categoria: "caballero", imagen: "recursos/A&A/caballeros_A&A/Israel.jpg"
+            },
+            {
+                id: 8, nombre: "Mandingo", inspirado: "Fragancia masculina exótica",
+                descripcion: "Exótico y misterioso, una fragancia única e irresistible.",
+                precio: "Desde $90", categoria: "caballero", imagen: "recursos/A&A/caballeros_A&A/Mandingo.jpg"
+            },
+            {
+                id: 9, nombre: "Mateo", inspirado: "Fragancia masculina juvenil",
+                descripcion: "Juvenil y vibrante, perfecto para el hombre contemporáneo.",
+                precio: "Desde $90", categoria: "caballero", imagen: "recursos/A&A/caballeros_A&A/Mateo.jpg"
+            },
+            {
+                id: 10, nombre: "Milton", inspirado: "Fragancia masculina distinguida",
+                descripcion: "Distinguido y elegante, para ocasiones importantes.",
+                precio: "Desde $90", categoria: "caballero", imagen: "recursos/A&A/caballeros_A&A/Milton.jpg"
+            },
+            {
+                id: 11, nombre: "Pedro", inspirado: "Fragancia masculina tradicional",
+                descripcion: "Tradicional con un toque moderno, una fragancia versátil.",
+                precio: "Desde $90", categoria: "caballero", imagen: "recursos/A&A/caballeros_A&A/Pedro.jpg"
+            },
+            
+            // DAMAS
+            {
+                id: 12, nombre: "Adele", inspirado: "Inspirado en Chance Chanel",
+                descripcion: "Elegante y sofisticada, una fragancia que marca presencia.",
+                precio: "Desde $90", categoria: "dama", imagen: "recursos/A&A/Damas_A&A/Adele(Chance_Chanel).jpg"
+            },
+            {
+                id: 13, nombre: "Adelita", inspirado: "Inspirado en Born In Roma Valentino",
+                descripcion: "Moderna y audaz, perfecta para la mujer contemporánea.",
+                precio: "Desde $90", categoria: "dama", imagen: "recursos/A&A/Damas_A&A/Adelita(Born_In_Roma_Valentino).jpg"
+            },
+            {
+                id: 14, nombre: "Alondra", inspirado: "Inspirado en Bade'e AI Oud Honor&Glory Lattafa",
+                descripcion: "Exótica y misteriosa, con notas orientales cautivadoras.",
+                precio: "Desde $90", categoria: "dama", imagen: "recursos/A&A/Damas_A&A/Alondra(Bade'e_AI_Oud_Honor&Glory_Lattafa).jpg"
+            },
+            {
+                id: 15, nombre: "Angelica", inspirado: "Inspirado en Yara Moi de Lattafa",
+                descripcion: "Dulce y envolvente, una fragancia que enamora.",
+                precio: "Desde $90", categoria: "dama", imagen: "recursos/A&A/Damas_A&A/Angelica(Yara_Moi_de_Lattafa).jpg"
+            },
+            {
+                id: 16, nombre: "Anina", inspirado: "Inspirado en Light Blue Dolce&Gabbana",
+                descripcion: "Fresca y mediterránea, perfecta para el verano.",
+                precio: "Desde $90", categoria: "dama", imagen: "recursos/A&A/Damas_A&A/Anina(Light_Blue_Dolce&Gabbana).jpg"
+            },
+            {
+                id: 17, nombre: "Blanca", inspirado: "Inspirado en Good Girl Blush Carolina Herrera",
+                descripcion: "Seductora y femenina, una fragancia irresistible.",
+                precio: "Desde $90", categoria: "dama", imagen: "recursos/A&A/Damas_A&A/Blanca(Good_Girl_Blush_EAN_Carolina_Herrera).jpg"
+            },
+            {
+                id: 18, nombre: "Diana", inspirado: "Inspirado en Kenzo Flower",
+                descripcion: "Floral y delicada, como un jardín en primavera.",
+                precio: "Desde $90", categoria: "dama", imagen: "recursos/A&A/Damas_A&A/Diana(Kenzo_Flower).jpg"
+            },
+            {
+                id: 19, nombre: "Dolores", inspirado: "Inspirado en Scandal Jean Paul Gaultier",
+                descripcion: "Provocativa y sensual, para mujeres que no pasan desapercibidas.",
+                precio: "Desde $90", categoria: "dama", imagen: "recursos/A&A/Damas_A&A/Dolores(Scandal_Jean_Paul_Gaultier).jpg"
+            },
+            {
+                id: 20, nombre: "Eaned", inspirado: "Inspirado en Ralph Laurent",
+                descripcion: "Clásica y refinada, una fragancia atemporal.",
+                precio: "Desde $90", categoria: "dama", imagen: "recursos/A&A/Damas_A&A/Eaned(Ralph_Laurent).jpg"
+            },
+            {
+                id: 21, nombre: "Esther", inspirado: "Inspirado en Khamrah Qahwa de Lattafa",
+                descripcion: "Rica y especiada, con notas de café y especias orientales.",
+                precio: "Desde $90", categoria: "dama", imagen: "recursos/A&A/Damas_A&A/Esther(Khamrah_Qahwa_de_Lattafa).jpg"
+            }
+        ];
+        
+        // Clase principal simplificada
+        class MobileAAApp {
+            constructor() {
+                this.currentCategory = 'todos';
+                this.isLoading = false;
+                console.log('📱 MobileAAApp constructor ejecutado');
+                this.init();
+            }
+            
+            init() {
+                console.log('🔧 Inicializando MobileAAApp...');
+                
+                try {
+                    this.loadFilters();
+                    this.loadProducts('todos');
+                    
+                    // Cambiar borde a dorado para indicar éxito
+                    document.body.style.borderColor = 'gold';
+                    console.log('✅ MobileAAApp inicializado correctamente');
+                    
+                } catch (error) {
+                    console.error('❌ Error en init:', error);
+                    document.body.style.borderColor = 'red';
+                }
+            }
+            
+            loadFilters() {
+                const container = document.getElementById('filtersContainer');
+                if (!container) {
+                    console.error('❌ No se encontró filtersContainer');
+                    return;
+                }
+                
+                const filters = [
+                    { key: 'todos', label: 'Todos' },
+                    { key: 'caballero', label: 'Caballero' },
+                    { key: 'dama', label: 'Dama' },
+                    { key: 'unisex', label: 'Unisex' }
+                ];
+                
+                const html = filters.map(filter => `
+                    <button class="filter-btn ${filter.key === 'todos' ? 'active' : ''}" 
+                            onclick="MobileApp.loadProducts('${filter.key}')">
+                        ${filter.label}
+                    </button>
+                `).join('');
+                
+                container.innerHTML = html;
+                console.log('🏷️ Filtros cargados:', filters.length);
+            }
+            
+            loadProducts(category) {
+                if (this.isLoading) return;
+                
+                console.log('📦 Cargando productos para:', category);
+                this.isLoading = true;
+                this.currentCategory = category;
+                
+                // Mostrar loading
+                const loading = document.getElementById('loading');
+                loading?.classList.remove('d-none');
+                
+                // Actualizar filtros activos
+                document.querySelectorAll('.filter-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                document.querySelector(`[onclick="MobileApp.loadProducts('${category}')"]`)?.classList.add('active');
+                
+                // Simular delay de carga
+                setTimeout(() => {
+                    try {
+                        // Filtrar productos
+                        let products = category === 'todos' ? PRODUCTOS : PRODUCTOS.filter(p => p.categoria === category);
+                        
+                        this.renderProducts(products);
+                        console.log(`✅ ${products.length} productos cargados`);
+                        
+                    } catch (error) {
+                        console.error('❌ Error cargando productos:', error);
+                    } finally {
+                        loading?.classList.add('d-none');
+                        this.isLoading = false;
+                    }
+                }, 300);
+            }
+            
+            renderProducts(products) {
+                const grid = document.getElementById('productsGrid');
+                const noProductsMsg = document.getElementById('noProductsMessage');
+                
+                if (!grid) {
+                    console.error('❌ No se encontró productsGrid');
+                    return;
+                }
+                
+                if (products.length === 0) {
+                    grid.innerHTML = '';
+                    noProductsMsg?.classList.remove('d-none');
+                    return;
+                }
+                
+                noProductsMsg?.classList.add('d-none');
+                
+                const html = products.map(product => `
+                    <div class="product-card" onclick="MobileApp.openProductModal(${product.id})">
+                        <div class="product-image">
+                            <img src="${product.imagen}" alt="${product.nombre}" 
+                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                            <div class="product-placeholder" style="display: none;">
+                                ${this.getProductEmoji(product.categoria)}
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-name">${product.nombre}</h3>
+                            <p class="product-description">${product.descripcion}</p>
+                            <div class="product-price">${product.precio}</div>
+                            <button class="btn-product-action" 
+                                    onclick="event.stopPropagation(); MobileApp.openProductModal(${product.id})">
+                                Ver detalles
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+                
+                grid.innerHTML = html;
+                console.log('🎨 Productos renderizados en el DOM');
+            }
+            
+            getProductEmoji(categoria) {
+                const emojis = {
+                    'caballero': '👨',
+                    'dama': '👩',
+                    'unisex': '💫'
+                };
+                return emojis[categoria] || '🌟';
+            }
+            
+            openProductModal(productId) {
+                const product = PRODUCTOS.find(p => p.id === productId);
+                if (!product) {
+                    console.error('❌ Producto no encontrado:', productId);
+                    return;
+                }
+                
+                console.log('🔍 Abriendo modal para:', product.nombre);
+                
+                // Estado del modal
+                let selectedSize = '30ml';
+                let selectedExtras = [];
+                
+                // Crear modal interactivo
+                const modal = document.createElement('div');
+                modal.className = 'product-modal-mobile';
+                modal.style.cssText = `
+                    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+                    background: rgba(0,0,0,0.9); z-index: 10000;
+                    display: flex; align-items: center; justify-content: center;
+                    padding: 20px; overflow-y: auto;
+                `;
+                
+                // Función para generar opciones de tamaño
+                const generateSizeOptions = () => {
+                    return Object.entries(CONFIG.precios.tamaños).map(([size, price]) => {
+                        const isSelected = size === selectedSize;
+                        return `
+                            <div class="size-option ${isSelected ? 'selected' : ''}" 
+                                 onclick="selectSize('${size}')" 
+                                 style="background: ${isSelected ? 'var(--primary)' : 'var(--bg-glass)'}; 
+                                        color: ${isSelected ? 'var(--secondary)' : 'var(--text-primary)'};
+                                        border: 2px solid ${isSelected ? 'var(--primary)' : 'rgba(255,255,255,0.1)'};
+                                        padding: 15px; border-radius: 10px; cursor: pointer; 
+                                        text-align: center; transition: all 0.3s ease;">
+                                <div style="font-weight: bold; font-size: 1.1rem;">${size}</div>
+                                <div style="font-size: 1rem; margin-top: 5px;">$${price}</div>
+                                ${size === '10ml' ? '<div style="font-size: 0.8rem; margin-top: 3px; opacity: 0.8;">Todo incluido</div>' : ''}
+                            </div>
+                        `;
+                    }).join('');
+                };
+                
+                // Función para generar opciones de extras
+                const generateExtraOptions = () => {
+                    const is10ml = selectedSize === '10ml';
+                    
+                    return Object.entries(CONFIG.precios.extras).map(([key, extra]) => {
+                        const isSelected = selectedExtras.includes(key);
+                        const extraPrice = is10ml ? 0 : extra.precios[selectedSize];
+                        const priceText = is10ml ? 'Ya incluido' : `+$${extraPrice}`;
+                        const priceColor = is10ml ? '#00ff88' : '#ffd700';
+                        
+                        return `
+                            <div class="extra-option ${isSelected ? 'selected' : ''}" 
+                                 onclick="toggleExtra('${key}')"
+                                 style="background: ${isSelected ? 'rgba(255,215,0,0.2)' : 'var(--bg-glass)'};
+                                        border: 2px solid ${isSelected ? 'var(--primary)' : 'rgba(255,255,255,0.1)'};
+                                        padding: 15px; border-radius: 10px; cursor: pointer;
+                                        display: flex; justify-content: space-between; align-items: center;
+                                        margin-bottom: 10px; transition: all 0.3s ease;">
+                                <div>
+                                    <div style="font-weight: bold; color: var(--primary);">${extra.nombre}</div>
+                                    <div style="font-size: 0.9rem; opacity: 0.8; margin-top: 3px;">${extra.descripcion}</div>
+                                    ${is10ml ? '<div style="color: #00ff88; font-size: 0.8rem; margin-top: 3px;">✓ Incluido sin costo adicional</div>' : ''}
+                                </div>
+                                <div style="color: ${priceColor}; font-weight: bold;">${priceText}</div>
+                            </div>
+                        `;
+                    }).join('');
+                };
+                
+                // Función para calcular precio total
+                const calculateTotal = () => {
+                    const basePrice = CONFIG.precios.tamaños[selectedSize];
+                    const is10ml = selectedSize === '10ml';
+                    let extrasPrice = 0;
+                    
+                    if (!is10ml) {
+                        selectedExtras.forEach(extraKey => {
+                            extrasPrice += CONFIG.precios.extras[extraKey].precios[selectedSize];
+                        });
+                    }
+                    
+                    return basePrice + extrasPrice;
+                };
+                
+                // Función para actualizar el modal
+                const updateModal = () => {
+                    const sizesContainer = modal.querySelector('#sizesContainer');
+                    const extrasContainer = modal.querySelector('#extrasContainer');
+                    const totalPriceEl = modal.querySelector('#totalPrice');
+                    const selectedSizeEl = modal.querySelector('#selectedSizeText');
+                    
+                    if (sizesContainer) sizesContainer.innerHTML = generateSizeOptions();
+                    if (extrasContainer) extrasContainer.innerHTML = generateExtraOptions();
+                    if (totalPriceEl) totalPriceEl.textContent = calculateTotal();
+                    if (selectedSizeEl) selectedSizeEl.textContent = selectedSize;
+                };
+                
+                // Funciones globales para el modal
+                window.selectSize = (size) => {
+                    selectedSize = size;
+                    selectedExtras = []; // Reset extras al cambiar tamaño
+                    updateModal();
+                };
+                
+                window.toggleExtra = (extraKey) => {
+                    const index = selectedExtras.indexOf(extraKey);
+                    if (index > -1) {
+                        selectedExtras.splice(index, 1);
+                    } else {
+                        // Solo permitir un extra a la vez
+                        selectedExtras = [extraKey];
+                    }
+                    updateModal();
+                };
+                
+                window.addToCartMobile = () => {
+                    const total = calculateTotal();
+                    const extrasNames = selectedExtras.map(key => CONFIG.precios.extras[key].nombre);
+                    
+                    // Crear mensaje para WhatsApp
+                    let mensaje = `🛒 *Pedido de ${product.nombre}*\n\n`;
+                    mensaje += `📦 Tamaño: ${selectedSize}\n`;
+                    mensaje += `💰 Precio base: $${CONFIG.precios.tamaños[selectedSize]}\n`;
+                    
+                    if (selectedExtras.length > 0) {
+                        mensaje += `✨ Extras: ${extrasNames.join(', ')}\n`;
+                        if (selectedSize !== '10ml') {
+                            const extrasTotal = selectedExtras.reduce((sum, key) => 
+                                sum + CONFIG.precios.extras[key].precios[selectedSize], 0);
+                            mensaje += `💰 Precio extras: $${extrasTotal}\n`;
+                        }
+                    }
+                    
+                    mensaje += `\n💵 *Total: $${total}*\n\n`;
+                    mensaje += `📝 Por favor confirma disponibilidad y método de pago.`;
+                    
+                    const whatsappUrl = `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(mensaje)}`;
+                    window.open(whatsappUrl, '_blank');
+                    modal.remove();
+                };
+                
+                // HTML del modal
+                modal.innerHTML = `
+                    <div style="background: var(--secondary); border-radius: 20px; padding: 20px; 
+                                max-width: 500px; width: 100%; max-height: 90vh; overflow-y: auto;
+                                border: 2px solid var(--primary);">
+                        
+                        <!-- Header -->
+                        <div style="text-align: center; margin-bottom: 20px; border-bottom: 1px solid rgba(255,215,0,0.3); padding-bottom: 15px;">
+                            <h3 style="color: var(--primary); margin-bottom: 10px;">✨ ${product.nombre}</h3>
+                            <p style="font-weight: bold; margin-bottom: 8px;">${product.inspirado}</p>
+                            <p style="opacity: 0.8; line-height: 1.4; font-size: 0.9rem;">${product.descripcion}</p>
+                        </div>
+                        
+                        <!-- Selección de Tamaño -->
+                        <div style="margin-bottom: 25px;">
+                            <h4 style="color: var(--primary); margin-bottom: 15px; text-align: center;">
+                                📏 Selecciona el tamaño
+                            </h4>
+                            <div id="sizesContainer" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;">
+                                ${generateSizeOptions()}
+                            </div>
+                        </div>
+                        
+                        <!-- Selección de Extras -->
+                        <div style="margin-bottom: 25px;">
+                            <h4 style="color: var(--primary); margin-bottom: 15px; text-align: center;">
+                                ✨ Extras disponibles (opcional)
+                            </h4>
+                            <div id="extrasContainer">
+                                ${generateExtraOptions()}
+                            </div>
+                        </div>
+                        
+                        <!-- Resumen de Precio -->
+                        <div style="background: rgba(255,215,0,0.1); border: 2px solid rgba(255,215,0,0.3); 
+                                    border-radius: 10px; padding: 15px; margin-bottom: 20px;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                                <span>Perfume (<span id="selectedSizeText">${selectedSize}</span>):</span>
+                                <span>$${CONFIG.precios.tamaños[selectedSize]}</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; font-weight: bold; 
+                                        font-size: 1.2rem; color: var(--primary); border-top: 1px solid rgba(255,215,0,0.3); 
+                                        padding-top: 8px; margin-top: 8px;">
+                                <span>Total:</span>
+                                <span>$<span id="totalPrice">${calculateTotal()}</span></span>
+                            </div>
+                        </div>
+                        
+                        <!-- Acciones -->
+                        <div style="display: flex; gap: 10px; justify-content: center;">
+                            <button onclick="addToCartMobile()" 
+                                    style="background: #25D366; color: white; padding: 15px 25px; 
+                                           border: none; border-radius: 10px; font-weight: bold; 
+                                           cursor: pointer; flex: 1; font-size: 1rem;">
+                                🛒 Pedir por WhatsApp
+                            </button>
+                            <button onclick="this.closest('.product-modal-mobile').remove()"
+                                    style="background: var(--bg-glass); color: white; padding: 15px 20px; 
+                                           border: var(--border-glass); border-radius: 10px; cursor: pointer;">
+                                ✕
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                document.body.appendChild(modal);
+                
+                // Cerrar al hacer clic fuera
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        modal.remove();
+                    }
+                });
+                
+                // Limpiar funciones globales al cerrar
+                const originalRemove = modal.remove;
+                modal.remove = function() {
+                    delete window.selectSize;
+                    delete window.toggleExtra;
+                    delete window.addToCartMobile;
+                    originalRemove.call(this);
+                };
+            }
+            
+            openCart() {
+                console.log('🛒 Abriendo carrito...');
+                alert('Carrito de compras próximamente');
+            }
+        }
+        
+        // Variables globales
+        let MobileApp;
+        
+        // Inicialización
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('📄 DOM cargado, inicializando...');
+            
+            try {
+                MobileApp = new MobileAAApp();
+                window.MobileApp = MobileApp;
+                
+                console.log('🌍 MobileApp disponible globalmente');
+                
+            } catch (error) {
+                console.error('❌ Error crítico:', error);
+                document.body.style.borderColor = 'red';
+                
+                // Mostrar error en pantalla
+                document.body.innerHTML = `
+                    <div style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+                                background: rgba(255,0,0,0.9); color: white; padding: 20px; 
+                                border-radius: 10px; text-align: center; z-index: 10000;">
+                        <h3>❌ Error de Inicialización</h3>
+                        <p>${error.message}</p>
+                        <button onclick="location.reload()" style="margin-top: 10px; padding: 10px 20px; 
+                                background: white; color: red; border: none; border-radius: 5px; cursor: pointer;">
+                            🔄 Recargar
+                        </button>
+                    </div>
+                `;
+            }
+        });
+        
+        // Manejo de errores globales
+        window.addEventListener('error', (e) => {
+            console.error('❌ Error global:', e.error);
+            document.body.style.borderColor = 'red';
+        });
+        
+        console.log('📱 Script A&A Mobile Ultra Fixed cargado');
+    </script>
+</body>
+</html>

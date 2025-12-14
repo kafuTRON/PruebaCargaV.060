@@ -1,0 +1,316 @@
+/* ===== CARTELONES.CSS - Sistema de Cartelones Promocionales ===== */
+
+/* Contenedor principal de novedades */
+.novedades-container {
+    margin: var(--spacing-lg) 0;
+    opacity: 1;
+    transition: all var(--transition-slow);
+}
+
+.novedades-container.hidden {
+    opacity: 0;
+    transform: translateY(-20px);
+    pointer-events: none;
+}
+
+/* Grid de cartelones */
+.novedades-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: var(--spacing-lg);
+    margin: var(--spacing-lg) 0;
+}
+
+/* Item individual de cartelón */
+.cartelon-item {
+    background: var(--bg-secondary);
+    border: var(--border-glass);
+    border-radius: var(--border-radius-lg);
+    overflow: hidden;
+    transition: all var(--transition-normal);
+    cursor: pointer;
+    position: relative;
+}
+
+.cartelon-item:hover {
+    transform: translateY(-10px) scale(1.02);
+    border-color: rgba(255, 215, 0, 0.5);
+    box-shadow: var(--shadow-lg), var(--shadow-glow);
+}
+
+/* Imagen del cartelón */
+.cartelon-image {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    transition: transform var(--transition-normal);
+}
+
+.cartelon-item:hover .cartelon-image {
+    transform: scale(1.05);
+}
+
+/* Overlay con información */
+.cartelon-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+    color: var(--color-text-primary);
+    padding: var(--spacing-md);
+    transform: translateY(100%);
+    transition: transform var(--transition-normal);
+}
+
+.cartelon-item:hover .cartelon-overlay {
+    transform: translateY(0);
+}
+
+/* Título del cartelón */
+.cartelon-title {
+    font-size: var(--font-size-lg);
+    font-weight: bold;
+    color: var(--color-primary);
+    margin-bottom: var(--spacing-xs);
+}
+
+/* Descripción del cartelón */
+.cartelon-description {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+}
+
+/* Botón de novedades */
+.novedades-btn {
+    animation: pulse 2s infinite;
+    background: linear-gradient(45deg, #ff6b7a, #ff4757);
+    margin-bottom: var(--spacing-sm);
+}
+
+@keyframes pulse {
+    0% { 
+        box-shadow: 0 0 0 0 rgba(255, 107, 122, 0.7); 
+    }
+    70% { 
+        box-shadow: 0 0 0 10px rgba(255, 107, 122, 0); 
+    }
+    100% { 
+        box-shadow: 0 0 0 0 rgba(255, 107, 122, 0); 
+    }
+}
+
+/* Cartelones laterales */
+.side-banners {
+    position: fixed;
+    width: 120px;
+    top: 120px;
+    height: calc(100vh - 240px);
+    max-height: 600px;
+    z-index: var(--z-dropdown);
+}
+
+.side-banners.left {
+    left: 20px;
+}
+
+.side-banners.right {
+    right: 20px;
+}
+
+.banner-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    border-radius: var(--border-radius-md);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+}
+
+.banner-container::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        45deg,
+        transparent,
+        rgba(255, 215, 0, 0.1),
+        transparent
+    );
+    animation: shimmer 3s infinite;
+    pointer-events: none;
+}
+
+@keyframes shimmer {
+    0% {
+        transform: translateX(-100%) translateY(-100%) rotate(45deg);
+    }
+    100% {
+        transform: translateX(100%) translateY(100%) rotate(45deg);
+    }
+}
+
+.banner-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: var(--border-radius-md);
+    opacity: 0;
+    transition: opacity var(--transition-slow);
+}
+
+.banner-image.active {
+    opacity: 1;
+}
+
+/* Responsive para tablets */
+@media (max-width: 1024px) {
+    .side-banners {
+        display: none;
+    }
+    
+    .novedades-grid {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: var(--spacing-md);
+    }
+    
+    .cartelon-item {
+        height: 250px;
+    }
+    
+    .cartelon-image {
+        height: 250px;
+    }
+}
+
+/* Responsive para móviles */
+@media (max-width: 768px) {
+    .novedades-btn {
+        width: 100%;
+        max-width: 300px;
+        margin: 0 auto var(--spacing-sm);
+        display: block !important;
+        padding: 12px 24px;
+        font-size: var(--font-size-base);
+    }
+    
+    .novedades-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-sm);
+    }
+    
+    .cartelon-item {
+        height: 200px;
+        margin: 0 var(--spacing-xs);
+    }
+    
+    .cartelon-image {
+        height: 200px;
+    }
+    
+    .cartelon-overlay {
+        padding: var(--spacing-sm);
+    }
+    
+    .cartelon-title {
+        font-size: var(--font-size-base);
+    }
+    
+    .cartelon-description {
+        font-size: var(--font-size-xs);
+    }
+}
+
+@media (max-width: 480px) {
+    .cartelon-item {
+        margin: 0 var(--spacing-xs);
+        height: 180px;
+    }
+    
+    .cartelon-image {
+        height: 180px;
+    }
+}
+
+/* Orientación horizontal en móviles */
+@media (max-height: 500px) and (orientation: landscape) {
+    .cartelon-item {
+        height: 150px;
+    }
+    
+    .cartelon-image {
+        height: 150px;
+    }
+}
+
+/* Optimizaciones para dispositivos táctiles */
+@media (hover: none) and (pointer: coarse) {
+    .cartelon-item:hover .cartelon-overlay {
+        transform: translateY(0); /* Mostrar siempre en móviles */
+    }
+    
+    .cartelon-item:active {
+        transform: scale(0.98);
+        transition: transform 0.1s ease;
+    }
+    
+    /* Mejorar selección de texto en móviles */
+    .cartelon-title {
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+}
+
+/* Optimizaciones de rendimiento para móviles */
+@media (max-width: 768px) {
+    .cartelon-item {
+        will-change: transform;
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+    }
+    
+    /* Mejorar rendimiento de imágenes */
+    .cartelon-image {
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+    }
+}
+
+/* Mejoras de accesibilidad */
+@media (max-width: 768px) {
+    /* Mejorar contraste para lectura en exteriores */
+    .cartelon-title {
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+    }
+    
+    .cartelon-description {
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+        color: #d0d0d0;
+    }
+}
+
+/* Optimizaciones para conexiones lentas */
+@media (prefers-reduced-data: reduce) {
+    .banner-container::after {
+        display: none; /* Desactivar efectos de brillo */
+    }
+    
+    .cartelon-item {
+        box-shadow: var(--shadow-sm); /* Reducir efectos visuales */
+    }
+}
+
+/* Mejoras para pantallas de alta densidad */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .cartelon-image {
+        image-rendering: -webkit-optimize-contrast;
+    }
+}

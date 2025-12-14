@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="theme-color" content="#ffd700">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="A&A Perfumería">
+    <title>A&A Perfumería - Móvil Ultra</title>
+    
+    <style>
+        /* CSS Crítico Optimizado */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --primary: #ffd700;
+            --primary-light: #ffed4e;
+            --secondary: #1e1e1e;
+            --secondary-light: #2d2d2d;
+            --text-primary: #ffffff;
+            --text-secondary: #cccccc;
+            --bg-glass: rgba(255,255,255,0.05);
+            --border-glass: 1px solid rgba(255,255,255,0.1);
+            --border-primary: 1px solid rgba(255,215,0,0.3);
+            --radius-sm: 15px;
+            --radius-md: 20px;
+            --spacing-sm: 1rem;
+            --transition: 0.3s ease;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-light) 100%);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        /* Header */
+        .header {
+            position: sticky;
+            top: 0;
+            background: rgba(30, 30, 30, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: var(--border-primary);
+            padding: var(--spacing-sm);
+            text-align: center;
+            z-index: 100;
+        }
+        
+        .header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 0.3rem;
+            background: linear-gradient(45deg, var(--primary), var(--primary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            margin-top: 0.5rem;
+        }
+        
+        .nav-back {
+            background: var(--bg-glass);
+            border: var(--border-glass);
+            padding: 8px 16px;
+            border-radius: 20px;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+        
+        .nav-back:hover {
+            background: rgba(255,255,255,0.1);
+        }
+        
+        .cart-button {
+            position: relative;
+            background: var(--bg-glass);
+            border: var(--border-primary);
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .cart-icon {
+            width: 24px;
+            height: 24px;
+            filter: brightness(0) invert(1);
+        }
+        
+        /* Container */
+        .container {
+            padding: 0 var(--spacing-sm);
+            max-width: 100%;
+        }
+        
+        /* Filtros */
+        .filters {
+            padding: var(--spacing-sm) 0;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .filters-scroll {
+            display: flex;
+            gap: 0.5rem;
+            padding: 0 var(--spacing-sm);
+            min-width: max-content;
+        }
+        
+        .filter-btn {
+            background: var(--bg-glass);
+            border: var(--border-glass);
+            color: var(--text-secondary);
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+            white-space: nowrap;
+            min-height: 44px;
+        }
+        
+        .filter-btn.active {
+            background: linear-gradient(45deg, var(--primary), var(--primary-light));
+            color: var(--secondary);
+            border-color: var(--primary);
+        }
+        
+        .filter-btn:active {
+            transform: scale(0.95);
+        }
+        
+        /* Productos */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            padding: 1rem 0;
+        }
+        
+        .product-card {
+            background: var(--bg-glass);
+            border: var(--border-glass);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-sm);
+            transition: all var(--transition);
+            cursor: pointer;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+        
+        .product-image {
+            width: 100%;
+            height: 200px;
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            margin-bottom: var(--spacing-sm);
+            position: relative;
+            background: var(--bg-glass);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+        
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .product-info {
+            text-align: left;
+        }
+        
+        .product-name {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+        
+        .product-description {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+        
+        .product-price {
+            font-size: 1rem;
+            font-weight: bold;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+        
+        .btn-product-action {
+            background: linear-gradient(45deg, var(--primary), var(--primary-light));
+            color: var(--secondary);
+            border: none;
+            padding: 12px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            transition: all var(--transition);
+        }
+        
+        .btn-product-action:active {
+            transform: scale(0.95);
+        }
+        
+        /* Loading y Estados */
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: var(--primary);
+        }
+        
+        .d-none {
+            display: none !important;
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .products-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 1.5rem;
+            }
+        }
+        
+        /* Safe Area para iPhone X+ */
+        @supports (padding: max(0px)) {
+            .header {
+                padding-left: max(var(--spacing-sm), env(safe-area-inset-left));
+                padding-right: max(var(--spacing-sm), env(safe-area-inset-right));
+                padding-top: max(var(--spacing-sm), env(safe-area-inset-top));
+            }
+        }
+        
+        /* Indicador de debug */
+        body {
+            border: 3px solid lime;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <h1>A&A Perfumería</h1>
+        <p>Fragancias inspiradas, creadas con amor</p>
+        
+        <nav class="nav-container">
+            <a href="index.html" class="nav-back">← Inicio</a>
+            <button class="cart-button" onclick="MobileApp.openCart()">
+                <img class="cart-icon" src="recursos/A&A/Material Grafico/Carrito_de_compras_Vacio.png" alt="Carrito">
+            </button>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Filtros -->
+        <section class="filters">
+            <div class="filters-scroll" id="filtersContainer">
+                <!-- Los filtros se cargarán aquí -->
+            </div>
+        </section>
+
+        <!-- Loading -->
+        <div id="loading" class="loading d-none">
+            Cargando productos...
+        </div>
+
+        <!-- Grid de Productos -->
+        <section id="productsGrid" class="products-grid">
+            <!-- Los productos se cargarán aquí -->
+        </section>
+
+        <!-- Mensaje de No Productos -->
+        <div id="noProductsMessage" class="d-none text-center">
+            <p style="opacity: 0.7;">No se encontraron productos en esta categoría.</p>
+        </div>
+    </main>
+
+    <script>
+        console.log('🚀 Iniciando A&A Mobile Ultra Working...');
+        
+        // Configuración
+        const CONFIG = {
+            whatsapp: '2721224946'
+        };
+        
+        // Datos de productos
+        const PRODUCTOS = [
+            {
+                id: 1,
+                nombre: "Perfume Inspirado Caballero Elite",
+                descripcion: "Fragancia masculina inspirada en los más exclusivos",
+                categoria: "caballero",
+                precio: 180,
+                emoji: "👨"
+            },
+            {
+                id: 2,
+                nombre: "Perfume Inspirado Dama Elegance",
+                descripcion: "Fragancia femenina sofisticada y elegante",
+                categoria: "dama",
+                precio: 180,
+                emoji: "👩"
+            },
+            {
+                id: 3,
+                nombre: "Perfume Inspirado Unisex Modern",
+                descripcion: "Fragancia versátil para cualquier ocasión",
+                categoria: "unisex",
+                precio: 200,
+                emoji: "💫"
+            },
+            {
+                id: 4,
+                nombre: "Perfume Inspirado Caballero Sport",
+                descripcion: "Fragancia fresca y deportiva",
+                categoria: "caballero",
+                precio: 220,
+                emoji: "🏃‍♂️"
+            },
+            {
+                id: 5,
+                nombre: "Perfume Inspirado Dama Floral",
+                descripcion: "Fragancia floral y romántica",
+                categoria: "dama",
+                precio: 200,
+                emoji: "🌹"
+            },
+            {
+                id: 6,
+                nombre: "Perfume Inspirado Unisex Bold",
+                descripcion: "Fragancia moderna y atrevida",
+                categoria: "unisex",
+                precio: 240,
+                emoji: "⚡"
+            }
+        ];
+        
+        // Clase principal simplificada
+        class MobileAAApp {
+            constructor() {
+                this.currentCategory = 'todos';
+                this.isLoading = false;
+                console.log('📱 MobileAAApp constructor ejecutado');
+                this.init();
+            }
+            
+            init() {
+                console.log('🔧 Inicializando MobileAAApp...');
+                
+                try {
+                    this.loadFilters();
+                    this.loadProducts('todos');
+                    
+                    // Cambiar borde a dorado para indicar éxito
+                    document.body.style.borderColor = 'gold';
+                    console.log('✅ MobileAAApp inicializado correctamente');
+                    
+                } catch (error) {
+                    console.error('❌ Error en init:', error);
+                    document.body.style.borderColor = 'red';
+                }
+            }
+            
+            loadFilters() {
+                const container = document.getElementById('filtersContainer');
+                if (!container) {
+                    console.error('❌ No se encontró filtersContainer');
+                    return;
+                }
+                
+                const filters = [
+                    { key: 'todos', label: 'Todos' },
+                    { key: 'caballero', label: 'Caballero' },
+                    { key: 'dama', label: 'Dama' },
+                    { key: 'unisex', label: 'Unisex' }
+                ];
+                
+                const html = filters.map(filter => `
+                    <button class="filter-btn ${filter.key === 'todos' ? 'active' : ''}" 
+                            onclick="MobileApp.loadProducts('${filter.key}')">
+                        ${filter.label}
+                    </button>
+                `).join('');
+                
+                container.innerHTML = html;
+                console.log('🏷️ Filtros cargados:', filters.length);
+            }
+            
+            loadProducts(category) {
+                if (this.isLoading) return;
+                
+                console.log('📦 Cargando productos para:', category);
+                this.isLoading = true;
+                this.currentCategory = category;
+                
+                // Mostrar loading
+                const loading = document.getElementById('loading');
+                loading?.classList.remove('d-none');
+                
+                // Actualizar filtros activos
+                document.querySelectorAll('.filter-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                document.querySelector(`[onclick="MobileApp.loadProducts('${category}')"]`)?.classList.add('active');
+                
+                // Simular delay de carga
+                setTimeout(() => {
+                    try {
+                        // Filtrar productos
+                        let products = category === 'todos' ? PRODUCTOS : PRODUCTOS.filter(p => p.categoria === category);
+                        
+                        this.renderProducts(products);
+                        console.log(`✅ ${products.length} productos cargados`);
+                        
+                    } catch (error) {
+                        console.error('❌ Error cargando productos:', error);
+                    } finally {
+                        loading?.classList.add('d-none');
+                        this.isLoading = false;
+                    }
+                }, 300);
+            }
+            
+            renderProducts(products) {
+                const grid = document.getElementById('productsGrid');
+                const noProductsMsg = document.getElementById('noProductsMessage');
+                
+                if (!grid) {
+                    console.error('❌ No se encontró productsGrid');
+                    return;
+                }
+                
+                if (products.length === 0) {
+                    grid.innerHTML = '';
+                    noProductsMsg?.classList.remove('d-none');
+                    return;
+                }
+                
+                noProductsMsg?.classList.add('d-none');
+                
+                const html = products.map(product => `
+                    <div class="product-card" onclick="MobileApp.openProductModal(${product.id})">
+                        <div class="product-image">
+                            ${product.emoji}
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-name">${product.nombre}</h3>
+                            <p class="product-description">${product.descripcion}</p>
+                            <div class="product-price">Desde $${product.precio}</div>
+                            <button class="btn-product-action" 
+                                    onclick="event.stopPropagation(); MobileApp.openProductModal(${product.id})">
+                                Ver detalles
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+                
+                grid.innerHTML = html;
+                console.log('🎨 Productos renderizados en el DOM');
+            }
+            
+            openProductModal(productId) {
+                const product = PRODUCTOS.find(p => p.id === productId);
+                if (!product) {
+                    console.error('❌ Producto no encontrado:', productId);
+                    return;
+                }
+                
+                console.log('🔍 Abriendo modal para:', product.nombre);
+                alert(`Producto: ${product.nombre}\nPrecio: $${product.precio}\nDescripción: ${product.descripcion}\n\n(Modal completo próximamente)`);
+            }
+            
+            openCart() {
+                console.log('🛒 Abriendo carrito...');
+                alert('Carrito de compras próximamente');
+            }
+        }
+        
+        // Variables globales
+        let MobileApp;
+        
+        // Inicialización
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('📄 DOM cargado, inicializando...');
+            
+            try {
+                MobileApp = new MobileAAApp();
+                window.MobileApp = MobileApp;
+                
+                console.log('🌍 MobileApp disponible globalmente');
+                
+            } catch (error) {
+                console.error('❌ Error crítico:', error);
+                document.body.style.borderColor = 'red';
+                
+                // Mostrar error en pantalla
+                document.body.innerHTML = `
+                    <div style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+                                background: rgba(255,0,0,0.9); color: white; padding: 20px; 
+                                border-radius: 10px; text-align: center; z-index: 10000;">
+                        <h3>❌ Error de Inicialización</h3>
+                        <p>${error.message}</p>
+                        <button onclick="location.reload()" style="margin-top: 10px; padding: 10px 20px; 
+                                background: white; color: red; border: none; border-radius: 5px; cursor: pointer;">
+                            🔄 Recargar
+                        </button>
+                    </div>
+                `;
+            }
+        });
+        
+        // Manejo de errores globales
+        window.addEventListener('error', (e) => {
+            console.error('❌ Error global:', e.error);
+            document.body.style.borderColor = 'red';
+        });
+        
+        console.log('📱 Script A&A Mobile Ultra Working cargado');
+    </script>
+</body>
+</html>

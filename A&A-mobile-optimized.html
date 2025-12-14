@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="theme-color" content="#ffd700">
+    
+    <!-- PWA y Mobile Meta Tags Optimizados -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="A&A Perfumería">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-touch-fullscreen" content="yes">
+    
+    <!-- Optimización para diferentes densidades de pantalla -->
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="msapplication-TileColor" content="#ffd700">
+    
+    <!-- SEO y Social Media -->
+    <meta name="description" content="A&A Perfumería - Fragancias inspiradas en los más populares, creadas con amor. Catálogo móvil optimizado.">
+    <meta name="keywords" content="perfumes móvil, fragancias, A&A, perfumería responsive, catálogo móvil">
+    <meta name="author" content="A&A Perfumería - Industrias TKM">
+    
+    <!-- Open Graph optimizado para móviles -->
+    <meta property="og:title" content="A&A Perfumería - Catálogo Móvil">
+    <meta property="og:description" content="Explora nuestro catálogo de fragancias desde tu móvil">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="recursos/A&A/A&A.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    
+    <title>A&A Perfumería - Catálogo Móvil</title>
+    
+    <!-- Preload crítico optimizado para móviles -->
+    <link rel="preload" href="modules/A&A/css/mobile-critical.css" as="style">
+    <link rel="preload" href="modules/A&A/js/mobile-main.js" as="script">
+    
+    <!-- CSS crítico inline para móviles -->
+    <style>
+        /* CSS crítico para evitar FOUC en móviles */
+        :root {
+            --aa-primary: #ffd700;
+            --aa-secondary: #ff6b35;
+            --aa-dark: #0a0a0a;
+            --aa-text-light: #ffffff;
+            --aa-mobile-padding: 16px;
+            --aa-mobile-gap: 12px;
+            --aa-touch-target: 44px;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            color: var(--aa-text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        .mobile-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            padding: var(--aa-mobile-padding);
+            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+        }
+        
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 215, 0, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--aa-primary);
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin { to { transform: rotate(360deg); } }
+    </style>
+    
+    <!-- CSS Modular Móvil -->
+    <link rel="stylesheet" href="modules/A&A/css/mobile-critical.css">
+</head>
+<body>
+    <!-- Header Móvil Optimizado -->
+    <header class="mobile-header">
+        <div class="mobile-nav">
+            <a href="index.html" class="nav-back" aria-label="Volver al inicio">←</a>
+        </div>
+        
+        <div class="mobile-header-content">
+            <h1 class="mobile-title">A&A Perfumería</h1>
+            <p class="mobile-subtitle">Fragancias inspiradas</p>
+        </div>
+        
+        <div class="mobile-nav">
+            <button class="cart-button" onclick="openMobileCart()" aria-label="Abrir carrito">
+                <svg class="cart-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M7 18c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12L8.1 13h7.45c.75 0 1.41-.41 1.75-1.03L21.7 4H5.21l-.94-2H1zm16 16c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+                </svg>
+                <span class="cart-counter" id="mobileCartCounter">0</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Contenido Principal Móvil -->
+    <main class="mobile-container">
+        <!-- Filtros Móviles -->
+        <section class="mobile-filters" id="mobileFilters">
+            <button class="filter-btn active" data-filter="todos">Todos</button>
+            <button class="filter-btn" data-filter="hombre">Hombre</button>
+            <button class="filter-btn" data-filter="mujer">Mujer</button>
+            <button class="filter-btn" data-filter="unisex">Unisex</button>
+            <button class="filter-btn" data-filter="novedades">🎉 Novedades</button>
+        </section>
+
+        <!-- Sección de Novedades -->
+        <section class="mobile-novedades" id="mobileNovedades" style="display: none;">
+            <h2 class="section-title">🎉 Novedades Industrias TKM</h2>
+            <div class="mobile-novedades-grid" id="mobileNovedadesGrid">
+                <!-- Los cartelones se cargarán aquí -->
+            </div>
+        </section>
+
+        <!-- Grid de Productos -->
+        <section class="mobile-products" id="mobileProducts">
+            <div class="mobile-products-grid" id="mobileProductsGrid">
+                <!-- Los productos se cargarán aquí -->
+            </div>
+        </section>
+
+        <!-- Estado de Carga -->
+        <div class="mobile-loading" id="mobileLoading" style="display: none;">
+            <div class="mobile-loading-spinner"></div>
+            <p>Cargando productos...</p>
+        </div>
+
+        <!-- Estado Vacío -->
+        <div class="mobile-empty" id="mobileEmpty" style="display: none;">
+            <div class="mobile-empty-icon">🔍</div>
+            <h3>No se encontraron productos</h3>
+            <p>Intenta con otro filtro</p>
+        </div>
+    </main>
+
+    <!-- Modal de Producto Móvil -->
+    <div class="mobile-modal" id="mobileProductModal">
+        <div class="mobile-modal-content">
+            <button class="mobile-modal-close" onclick="closeMobileProductModal()" aria-label="Cerrar modal">×</button>
+            <div class="mobile-modal-body" id="mobileModalBody">
+                <!-- Contenido del modal se carga dinámicamente -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Carrito Móvil -->
+    <div class="mobile-modal" id="mobileCartModal">
+        <div class="mobile-modal-content">
+            <button class="mobile-modal-close" onclick="closeMobileCart()" aria-label="Cerrar carrito">×</button>
+            <div class="mobile-cart-header">
+                <h2>🛒 Mi Carrito</h2>
+                <span class="mobile-cart-count" id="mobileCartCount">0 productos</span>
+            </div>
+            <div class="mobile-cart-body" id="mobileCartBody">
+                <!-- Contenido del carrito se carga dinámicamente -->
+            </div>
+            <div class="mobile-cart-footer" id="mobileCartFooter">
+                <!-- Total y acciones del carrito -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Móvil -->
+    <footer class="mobile-footer">
+        <p>© 2025 A&A Perfumería - Industrias TKM</p>
+        <p>Fragancias creadas con amor</p>
+    </footer>
+
+    <!-- JavaScript Modular Móvil -->
+    <script src="js/config.js"></script>
+    <script src="modules/A&A/js/mobile-main.js"></script>
+    
+    <script>
+        // Inicialización móvil
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('📱 Iniciando A&A Perfumería - Versión Móvil Optimizada');
+            
+            // Verificar si es realmente un dispositivo móvil
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
+                            window.innerWidth <= 768;
+            
+            if (!isMobile) {
+                console.log('⚠️ Dispositivo desktop detectado, redirigiendo a versión completa...');
+                window.location.href = 'A&A.html';
+                return;
+            }
+            
+            // Inicializar aplicación móvil
+            if (typeof MobileAAManager !== 'undefined') {
+                window.mobileApp = new MobileAAManager();
+                window.mobileApp.init();
+            } else {
+                console.error('❌ MobileAAManager no encontrado');
+            }
+        });
+    </script>
+</body>
+</html>

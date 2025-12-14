@@ -1,0 +1,370 @@
+/* ===== MODALS.CSS - Sistema de Modales Reutilizable ===== */
+
+/* Base para todos los modales */
+.modal-base {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--bg-modal);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: var(--z-modal);
+    opacity: 0;
+    visibility: hidden;
+    transition: all var(--transition-normal);
+    backdrop-filter: blur(10px);
+}
+
+.modal-base.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Contenido base del modal */
+.modal-content-base {
+    background: var(--bg-primary);
+    border-radius: var(--border-radius-xl);
+    padding: var(--spacing-lg);
+    max-width: 600px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    border: var(--border-primary);
+    box-shadow: var(--shadow-lg);
+    transform: scale(0.7);
+    transition: transform var(--transition-normal);
+    position: relative;
+}
+
+.modal-base.active .modal-content-base {
+    transform: scale(1);
+}
+
+/* Botón de cerrar */
+.modal-close-base {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: none;
+    border: none;
+    color: var(--color-text-primary);
+    font-size: 2rem;
+    cursor: pointer;
+    transition: color var(--transition-fast);
+    z-index: calc(var(--z-modal) + 1);
+}
+
+.modal-close-base:hover {
+    color: var(--color-primary);
+}
+
+/* Header del modal */
+.modal-header-base {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-lg);
+    border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+    padding-bottom: var(--spacing-sm);
+}
+
+.modal-title-base {
+    color: var(--color-primary);
+    font-size: var(--font-size-xl);
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+/* Acciones del modal */
+.modal-actions-base {
+    display: flex;
+    gap: var(--spacing-sm);
+    justify-content: center;
+    margin-top: var(--spacing-lg);
+}
+
+/* Botones de acción */
+.btn-action {
+    background: linear-gradient(45deg, var(--color-primary), var(--color-primary-light));
+    color: #000;
+    border: none;
+    padding: 12px 24px;
+    border-radius: var(--border-radius-xl);
+    font-weight: bold;
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    font-size: var(--font-size-base);
+}
+
+.btn-action:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-action.secondary {
+    background: var(--bg-secondary);
+    color: var(--color-text-primary);
+    border: var(--border-glass);
+}
+
+.btn-action.secondary:hover {
+    background: var(--bg-glass);
+    border-color: var(--color-primary);
+}
+
+/* Modal específico del carrito */
+.cart-modal {
+    @extend .modal-base;
+}
+
+.cart-modal-content {
+    @extend .modal-content-base;
+}
+
+.cart-close {
+    @extend .modal-close-base;
+}
+
+.cart-header {
+    @extend .modal-header-base;
+}
+
+.cart-title {
+    @extend .modal-title-base;
+}
+
+.cart-actions {
+    @extend .modal-actions-base;
+}
+
+.btn-cart-action {
+    @extend .btn-action;
+}
+
+/* Modal específico de producto */
+.product-modal {
+    @extend .modal-base;
+}
+
+.modal-content {
+    @extend .modal-content-base;
+}
+
+.modal-close {
+    @extend .modal-close-base;
+}
+
+/* Imagen del producto en modal */
+.modal-product-image {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: var(--border-radius-md);
+    margin: 0 auto var(--spacing-sm);
+    display: block;
+}
+
+.modal-product-name {
+    color: var(--color-primary);
+    text-align: center;
+    margin-bottom: var(--spacing-xs);
+    font-size: var(--font-size-xl);
+}
+
+/* Grid de tamaños */
+.sizes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-lg);
+}
+
+.size-option {
+    background: var(--bg-secondary);
+    border: var(--border-glass);
+    border-radius: var(--border-radius-sm);
+    padding: var(--spacing-sm);
+    text-align: center;
+    cursor: pointer;
+    transition: all var(--transition-normal);
+}
+
+.size-option:hover,
+.size-option.selected {
+    background: rgba(255, 215, 0, 0.2);
+    border-color: var(--color-primary);
+}
+
+.size-ml {
+    font-size: var(--font-size-lg);
+    font-weight: bold;
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-xs);
+}
+
+.size-price {
+    color: var(--color-primary);
+    font-weight: bold;
+}
+
+/* Opciones extra */
+.extra-option {
+    background: var(--bg-secondary);
+    border: var(--border-glass);
+    border-radius: var(--border-radius-sm);
+    padding: var(--spacing-sm);
+    cursor: pointer;
+    margin-bottom: var(--spacing-xs);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all var(--transition-normal);
+}
+
+.extra-option:hover,
+.extra-option.selected {
+    background: rgba(255, 215, 0, 0.2);
+    border-color: var(--color-primary);
+}
+
+/* Responsive para modales */
+@media (max-width: 768px) {
+    .modal-content-base {
+        width: 95%;
+        max-width: none;
+        margin: var(--spacing-sm);
+        padding: var(--spacing-md);
+        max-height: 90vh;
+        border-radius: var(--border-radius-lg);
+    }
+    
+    .modal-close-base {
+        top: 10px;
+        right: 15px;
+        font-size: 1.8rem;
+    }
+    
+    .modal-header-base {
+        margin-bottom: var(--spacing-md);
+        padding-bottom: var(--spacing-sm);
+    }
+    
+    .modal-title-base {
+        font-size: var(--font-size-lg);
+    }
+    
+    .modal-product-image {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .modal-product-name {
+        font-size: var(--font-size-lg);
+    }
+    
+    .sizes-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--spacing-xs);
+    }
+    
+    .size-option {
+        padding: var(--spacing-xs);
+    }
+    
+    .size-ml {
+        font-size: var(--font-size-base);
+    }
+    
+    .size-price {
+        font-size: var(--font-size-base);
+    }
+    
+    .extra-option {
+        padding: var(--spacing-xs);
+        flex-direction: column;
+        text-align: center;
+        gap: var(--spacing-xs);
+    }
+    
+    .modal-actions-base {
+        flex-direction: column;
+        gap: var(--spacing-xs);
+    }
+    
+    .btn-action {
+        width: 100%;
+        padding: 14px 20px;
+        font-size: var(--font-size-base);
+    }
+}
+
+@media (max-width: 480px) {
+    .modal-content-base {
+        margin: var(--spacing-xs);
+        padding: var(--spacing-sm);
+        border-radius: var(--border-radius-md);
+    }
+    
+    .sizes-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-xs);
+    }
+    
+    .size-option,
+    .extra-option {
+        padding: var(--spacing-xs);
+    }
+}
+
+/* Optimizaciones para dispositivos táctiles */
+@media (hover: none) and (pointer: coarse) {
+    .btn-action {
+        min-height: 44px;
+        -webkit-tap-highlight-color: rgba(255, 215, 0, 0.3);
+        tap-highlight-color: rgba(255, 215, 0, 0.3);
+    }
+    
+    .btn-action:active {
+        transform: scale(0.95);
+        transition: transform 0.1s ease;
+    }
+    
+    .size-option:active,
+    .extra-option:active {
+        transform: scale(0.98);
+        transition: transform 0.1s ease;
+    }
+    
+    /* Optimizar scroll en móviles */
+    .modal-content-base {
+        -webkit-overflow-scrolling: touch;
+        overflow-scrolling: touch;
+    }
+}
+
+/* Optimizaciones de rendimiento */
+@media (max-width: 768px) {
+    .modal-content-base {
+        will-change: transform;
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+    }
+    
+    /* Reducir blur en móviles para mejor rendimiento */
+    .modal-base {
+        backdrop-filter: blur(5px);
+    }
+}
+
+/* Optimizaciones para conexiones lentas */
+@media (prefers-reduced-data: reduce) {
+    .modal-base {
+        backdrop-filter: none;
+        background: rgba(0, 0, 0, 0.95);
+    }
+}

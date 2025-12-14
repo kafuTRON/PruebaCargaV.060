@@ -1,0 +1,190 @@
+/* ========== MÓDULO INDEX - SECCIÓN TIKTOK ========== */
+
+/* ----------- VIDEOS TIKTOK ----------- */
+.videos-section {
+    margin-top: 40px;
+    padding: 20px 0 60px 0;
+}
+
+.videos-titulo {
+    text-align: center;
+    color: var(--primary-color);
+    font-size: clamp(2rem, 5vw, 2.5rem);
+    margin: 0 auto 50px auto;
+    padding: 20px 20px 0 20px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    max-width: 1200px;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.videos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.video-item {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: var(--border-radius);
+    padding: 20px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: var(--transition);
+}
+
+.video-item:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-primary);
+    border-color: var(--primary-color);
+}
+
+/* ----------- BOTONES TIKTOK ----------- */
+.btn-cargar-videos {
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    color: var(--text-light);
+    padding: 12px 24px;
+    border: none;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: var(--shadow-primary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-cargar-videos:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+}
+
+.btn-cargar-videos:active {
+    transform: translateY(0);
+}
+
+.btn-cargar-videos:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Efecto de ondas en el botón */
+.btn-cargar-videos::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    transform: translate(-50%, -50%);
+    transition: width 0.3s ease, height 0.3s ease;
+}
+
+.btn-cargar-videos:hover::before {
+    width: 100%;
+    height: 100%;
+}
+
+/* ----------- LOADING SPINNER ----------- */
+.loading-spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: var(--text-light);
+    animation: spin 1s ease-in-out infinite;
+    margin-right: 8px;
+}
+
+@keyframes spin {
+    to { 
+        transform: rotate(360deg); 
+    }
+}
+
+/* ----------- ESTADOS DE CARGA ----------- */
+.videos-loading {
+    text-align: center;
+    color: var(--primary-color);
+    padding: 40px;
+    font-size: 1.1rem;
+}
+
+.videos-error {
+    text-align: center;
+    color: #ff4444;
+    padding: 40px;
+    background: rgba(255, 68, 68, 0.1);
+    border-radius: var(--border-radius);
+    margin: 20px;
+    border: 1px solid rgba(255, 68, 68, 0.3);
+}
+
+.videos-error h3 {
+    margin-bottom: 15px;
+    font-size: 1.3rem;
+}
+
+.videos-error p {
+    margin-bottom: 20px;
+    opacity: 0.8;
+}
+
+/* ----------- EMBEDS DE TIKTOK ----------- */
+.tiktok-embed {
+    margin: 0 auto !important;
+    border-radius: var(--border-radius) !important;
+    overflow: hidden !important;
+}
+
+/* ----------- RESPONSIVE ----------- */
+@media (max-width: 768px) {
+    .videos-grid {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 20px;
+        padding: 0 10px;
+    }
+    
+    .video-item {
+        padding: 15px;
+    }
+    
+    .videos-titulo {
+        padding: 15px 10px 0 10px;
+        margin-bottom: 30px;
+    }
+    
+    .btn-cargar-videos {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .videos-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .videos-section {
+        padding: 15px 0 40px 0;
+    }
+    
+    .videos-loading,
+    .videos-error {
+        padding: 20px;
+        margin: 10px;
+    }
+}

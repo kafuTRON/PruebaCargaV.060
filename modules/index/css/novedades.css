@@ -1,0 +1,135 @@
+/* ========== MÓDULO INDEX - SECCIÓN NOVEDADES ========== */
+
+/* ----------- SECCIÓN NOVEDADES ----------- */
+.seccion-novedades {
+    background: var(--gradient-dark);
+    padding: 60px 20px;
+    min-height: 100vh;
+    width: 100%;
+}
+
+.novedades-titulo {
+    text-align: center;
+    color: var(--primary-color);
+    font-size: clamp(2rem, 6vw, 3rem);
+    margin: 0 auto 60px auto;
+    padding: 40px 20px 0 20px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    max-width: 1200px;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.novedades-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto 40px auto;
+    padding: 0 20px;
+}
+
+.novedad-item {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    transition: var(--transition);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+}
+
+.novedad-item:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-hover);
+    border-color: var(--primary-color);
+}
+
+.novedad-item img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    transition: var(--transition);
+}
+
+.novedad-item:hover img {
+    transform: scale(1.05);
+}
+
+.novedad-content {
+    padding: 20px;
+    color: var(--text-light);
+}
+
+.novedad-titulo {
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+.novedad-descripcion {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    opacity: 0.9;
+    color: var(--text-muted);
+}
+
+/* ----------- EFECTOS ADICIONALES ----------- */
+.novedad-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 107, 53, 0.1),
+        transparent
+    );
+    transition: left 0.5s ease;
+}
+
+.novedad-item:hover::before {
+    left: 100%;
+}
+
+/* ----------- RESPONSIVE ----------- */
+@media (max-width: 768px) {
+    .novedades-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        padding: 0 10px;
+    }
+    
+    .novedad-item img {
+        height: 200px;
+    }
+    
+    .novedad-content {
+        padding: 15px;
+    }
+    
+    .novedades-titulo {
+        padding: 20px 10px 0 10px;
+        margin-bottom: 40px;
+    }
+}
+
+@media (max-width: 480px) {
+    .novedades-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .novedad-item img {
+        height: 180px;
+    }
+    
+    .seccion-novedades {
+        padding: 40px 10px;
+    }
+}
